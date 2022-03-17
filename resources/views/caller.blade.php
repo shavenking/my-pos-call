@@ -13,7 +13,15 @@
     <button type="submit">呼叫</button>
 </form>
 
-
 </body>
 <script src="{{ asset('js/app.js') }}"></script>
+@if (session('success'))
+    <script>
+        swal({
+            title: "{{ session('success') }}",
+            icon: "success",
+            button: "謝謝",
+        });
+    </script>
+@endif
 </html>

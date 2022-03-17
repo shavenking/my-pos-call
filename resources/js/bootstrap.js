@@ -37,3 +37,7 @@ import {Howl, Howler} from 'howler';
 
 window.Howl = Howl
 window.Howler = Howler
+
+import swal from 'sweetalert';
+
+window.swal = swal

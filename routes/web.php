@@ -31,5 +31,5 @@ Route::get('caller/{shopId}/{tableId}', function ($shopId, $tableId) {
 Route::post('caller/{shopId}/{tableId}/calls', function ($shopId, $tableId) {
     broadcast(new \App\Events\TableCall($shopId, $tableId));
 
-    return redirect("/caller/$shopId/$tableId");
+    return redirect("/caller/$shopId/$tableId")->with('success', '呼叫成功！');
 });

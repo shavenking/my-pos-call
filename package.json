@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "alpinejs": "^3.9.1",
-        "howler": "^2.2.3"
+        "howler": "^2.2.3",
+        "sweetalert": "^2.1.2"
     }
 }
