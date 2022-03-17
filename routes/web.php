@@ -14,5 +14,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'ok';
+});
+
+Route::get('callee/{shopId}', function ($shopId) {
+    return view('callee', ['shopId' => $shopId]);
+});
+
+Route::get('caller/{shopId}/{tableId}', function ($shopId, $tableId) {
+    return view('caller', [
+        'shopId'  => $shopId,
+        'tableId' => $tableId,
+    ]);
+});
+
+Route::post('caller/{shopId}/{tableId}/calls', function ($shopId, $tableId) {
+    broadcast(new \App\Events\TableCall($shopId, $tableId));
+
+    return redirect("/caller/$shopId/$tableId");
 });
