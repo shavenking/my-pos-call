@@ -1,0 +1,23 @@
+id: 29322
+name: my-pos-call
+environments:
+    production:
+        domain: call.my-pos.tw
+        storage: my-pos-call-prod-storage
+        queues: false
+        scheduler: false
+        cli-memory: 256
+        cli-timeout: 60
+        memory: 256
+        timeout: 30
+        runtime: docker
+        gateway-version: 2
+#        subnets:
+#            - subnet-06a7d791137e2e300
+#            - subnet-0cd3f8767430361f3
+#        security-groups:
+#            - sg-06434f456e5667d3f
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+            - 'php artisan event:cache'
+            - 'npm ci && npm run prod && rm -rf node_modules'

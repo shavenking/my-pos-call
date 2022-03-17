@@ -1,0 +1,36 @@
+name: Master Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer:v2
+          coverage: none
+      - name: Require Vapor CLI
+        run: composer global require laravel/vapor-cli
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-dev
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_MIX_PUSHER_APP_KEY: ${{ secrets.MIX_PUSHER_APP_KEY }}
+          envkey_MIX_PUSHER_APP_CLUSTER: ap1
+          file_name: .env
+          fail_on_empty: false
+      - name: Deploy Environment
+        run: |
+          vapor team:switch --id=36526
+          vapor deploy production
+        env:
+          VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
